@@ -1,12 +1,11 @@
 package org.acme.experiments;
 
+import org.acme.experiments.dto.FactDTO;
+import org.acme.experiments.dto.PersonalizedFactDTO;
 import org.acme.experiments.external.FactsService;
 import org.acme.experiments.service.PersonalizedFactsService;
-import org.acme.experiments.dto.PersonalizedFactDTO;
-import org.acme.experiments.dto.FactDTO;
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.GraphQLApi;
-import org.eclipse.microprofile.graphql.Query;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.inject.Inject;
@@ -15,10 +14,9 @@ import javax.ws.rs.core.MediaType;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
 
 @Path("/api")
-//@GraphQLApi
+@GraphQLApi
 public class PersonalizedFactsResource {
 
     @Inject
@@ -48,7 +46,7 @@ public class PersonalizedFactsResource {
     @Path("fact-type-async")
     @Produces(MediaType.APPLICATION_JSON)
 //    @Query("allFactsByTypeAndAmount")
-    public CompletionStage<Set<FactDTO>> getByTypeAndAmount(@QueryParam("type") String type, @QueryParam("amount") Integer amount) throws ExecutionException, InterruptedException {
+    public CompletionStage<Set<FactDTO>> getByTypeAndAmount(@QueryParam("type") String type, @QueryParam("amount") Integer amount) {
         return CompletableFuture.supplyAsync(() -> factsService.getByTypeAsync(type, amount));
     }
 
