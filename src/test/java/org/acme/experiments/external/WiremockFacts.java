@@ -19,25 +19,8 @@ public class WiremockFacts implements QuarkusTestResourceLifecycleManager {
         wireMockServer = new WireMockServer();
         wireMockServer.start();
 
-//        var cats = "[{\"type\": \"cat\",\"source\": \"user\"}, {\"type\": \"cat\",\"source\": \"user\"}]";
-        var cats = """
-                [
-                   {
-                      "type":"cat",
-                      "source":"user"
-                   },
-                   {
-                      "type":"cat",
-                      "source":"user"
-                   }
-                ]
-                """;
-        var cat = """
-                {
-                      "type":"cat",
-                      "source":"user"
-                   }
-                """;
+        var cats = "[{\"type\": \"cat\",\"source\": \"user\"}, {\"type\": \"cat\",\"source\": \"user\"}]";
+        var cat = "{\"type\": \"cat\",\"source\": \"user\"}";
 
         stubFor(get(urlEqualTo("/facts?animal_type=cat"))
                         .willReturn(aResponse()

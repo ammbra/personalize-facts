@@ -50,7 +50,7 @@ public interface FactsService {
         private static final FactDTO EMPTY_FACT = FactDTO.empty();
         @Override
         public Set<FactDTO> handle(ExecutionContext context) {
-            return Set.of(EMPTY_FACT);
+            return Collections.singleton(EMPTY_FACT);
         }
 
     }

@@ -32,15 +32,21 @@ public class PersonalizedFactsMapper {
     private Status mapFromDTO(StatusDTO statusDTO) {
         Status status = new Status();
         if ( statusDTO != null ) {
-            status.setFeedback(statusDTO.feedback());
-            status.setSentCount(statusDTO.sentCount());
-            status.setVerified(statusDTO.verified());
+            status.setFeedback(statusDTO.feedback);
+            status.setSentCount(statusDTO.sentCount);
+            status.setVerified(statusDTO.verified);
         }
         return status;
     }
 
     private StatusDTO mapToDTO(Status status) {
-        return new StatusDTO(status.isVerified(), status.getSentCount(), status.getFeedback());
+        StatusDTO dto = new StatusDTO();
+        if ( status != null ) {
+            dto.feedback = status.getFeedback();
+            dto.sentCount = status.getSentCount();
+            dto.verified = status.isVerified();
+        }
+        return dto;
     }
 
     public Set<PersonalizedFactDTO> mapToDTO(Set<PersonalizedFact> facts) {
@@ -49,7 +55,7 @@ public class PersonalizedFactsMapper {
             PersonalizedFactDTO dto = new PersonalizedFactDTO();
             dto._id = fact.getFactId();
             dto.createdAt = fact.getCreatedAt();
-            dto.statusDTO = (fact.getStatus() != null) ? mapToDTO(fact.getStatus()) : null;
+            dto.statusDTO = mapToDTO(fact.getStatus());
             dto.randomness = fact.getRandomness();
             dto.updatedAt = fact.getUpdatedAt();
             dto.source = fact.getSource();

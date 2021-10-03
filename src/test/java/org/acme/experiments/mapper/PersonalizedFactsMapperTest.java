@@ -26,7 +26,8 @@ public class PersonalizedFactsMapperTest {
         dto = new FactDTO();
         dto._id = UUID.randomUUID().toString();
         dto.createdAt = new Date();
-        dto.statusDTO = new StatusDTO(false, 0, "something");
+        dto.statusDTO = new StatusDTO();
+        dto.statusDTO.sentCount = 4;
         dto.source = "api";
         dto.type = "cat";
         dto.text = "A fact about cats";
@@ -46,7 +47,8 @@ public class PersonalizedFactsMapperTest {
 
     @Test
     void shouldMapFromDTO() {
-        Set<FactDTO> facts = Set.of(dto);
+        Set<FactDTO> facts = new HashSet<>();
+        facts.add(dto);
         Set<PersonalizedFact> personalizedFacts = mapper.mapFromDTO(facts);
         assertNotNull(personalizedFacts);
         assertEquals(1, personalizedFacts.size());
@@ -54,7 +56,8 @@ public class PersonalizedFactsMapperTest {
 
     @Test
     void shouldMapToDTO() {
-        Set<PersonalizedFact> personalizedFacts = Set.of(fact);
+        Set<PersonalizedFact> personalizedFacts = new HashSet<>();
+        personalizedFacts.add(fact);
         Set<PersonalizedFactDTO> dtos = mapper.mapToDTO(personalizedFacts);
         assertNotNull(dtos);
         assertEquals(1, dtos.size());

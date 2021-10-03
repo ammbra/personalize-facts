@@ -2,7 +2,14 @@ package org.acme.experiments.dto;
 
 import lombok.NoArgsConstructor;
 
-public record UserDTO(String _id, Name name, String photo) {
+@NoArgsConstructor
+public class UserDTO {
+
+    public String _id;
+
+    public Name name;
+
+    public String photo;
 }
 
 @NoArgsConstructor

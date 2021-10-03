@@ -1,4 +1,10 @@
 package org.acme.experiments.dto;
 
-public record StatusDTO (boolean verified, int sentCount, String feedback) {
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class StatusDTO {
+   public boolean verified;
+   public int sentCount;
+   public String feedback;
 }
