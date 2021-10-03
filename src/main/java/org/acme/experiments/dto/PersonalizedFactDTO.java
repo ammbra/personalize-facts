@@ -13,7 +13,7 @@ public class PersonalizedFactDTO extends FactDTO {
     public UserDTO user;
 
     @JsonbCreator
-    public static CompletionStage<PersonalizedFactDTO> emptyAsync() {
-        return CompletableFuture.supplyAsync(() -> new PersonalizedFactDTO());
+    public static PersonalizedFactDTO empty() {
+        return new PersonalizedFactDTO();
     }
 }

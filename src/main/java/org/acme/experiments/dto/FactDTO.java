@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.json.bind.annotation.JsonbCreator;
 import java.util.Date;
 
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public class FactDTO {

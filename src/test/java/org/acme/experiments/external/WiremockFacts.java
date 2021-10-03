@@ -19,8 +19,25 @@ public class WiremockFacts implements QuarkusTestResourceLifecycleManager {
         wireMockServer = new WireMockServer();
         wireMockServer.start();
 
-        var cats = "[{\"type\": \"cat\",\"source\": \"user\"}, {\"type\": \"cat\",\"source\": \"user\"}]";
-        var cat = "{\"type\": \"cat\",\"source\": \"user\"}";
+//        var cats = "[{\"type\": \"cat\",\"source\": \"user\"}, {\"type\": \"cat\",\"source\": \"user\"}]";
+        var cats = """
+                [
+                   {
+                      "type":"cat",
+                      "source":"user"
+                   },
+                   {
+                      "type":"cat",
+                      "source":"user"
+                   }
+                ]
+                """;
+        var cat = """
+                {
+                      "type":"cat",
+                      "source":"user"
+                   }
+                """;
 
         stubFor(get(urlEqualTo("/facts?animal_type=cat"))
                         .willReturn(aResponse()
@@ -55,7 +72,7 @@ public class WiremockFacts implements QuarkusTestResourceLifecycleManager {
                                             )));
         stubFor(get(urlMatching(".*")).atPriority(10).willReturn(aResponse().proxiedFrom("https://cat-fact.herokuapp.com")));
 
-        return Collections.singletonMap("org.acme.experiment.external.FactsService/mp-rest/url", wireMockServer.baseUrl());
+        return Collections.singletonMap("org.acme.experiments.external.FactsService/mp-rest/url", wireMockServer.baseUrl());
     }
 
     @Override

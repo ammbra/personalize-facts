@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @QuarkusTest
 public class FactsServiceITest {
 
-    public static final double OUTLIER_SIZE = 103.75;
+    public static final double OUTLIER_SIZE = 103.875;
 
     @Inject
     @RestClient
@@ -79,6 +79,7 @@ public class FactsServiceITest {
         List<String> result =  valueAtPercentiles
                 .stream()
                 .map(m -> m.percentile() + "=" + m.value()).collect(Collectors.toList());
+        System.err.println(result);
         assertTrue(result.contains("0.99="+OUTLIER_SIZE));
 
     }
