@@ -10,7 +10,7 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
-public class FactDTO {
+public sealed class FactDTO permits PersonalizedFactDTO {
 
     public static final String API = "api";
     public static final String USER = "user";

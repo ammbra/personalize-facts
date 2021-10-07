@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 @NoArgsConstructor
-public class PersonalizedFactDTO extends FactDTO {
+public non-sealed class PersonalizedFactDTO extends FactDTO {
 
     public Double randomness;
     public UserDTO user;
