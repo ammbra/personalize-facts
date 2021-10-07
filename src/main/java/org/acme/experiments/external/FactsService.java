@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -20,12 +18,12 @@ import java.util.concurrent.CompletionStage;
 @Path("/facts")
 @RegisterRestClient
 public interface FactsService {
-    static final Logger LOGGER = LoggerFactory.getLogger(FactsService.class);
+    Logger LOGGER = LoggerFactory.getLogger(FactsService.class);
 
     @GET
     @Produces("application/json")
     @Fallback(FactFallback.class)
-    Set<FactDTO> getByType(@QueryParam("animal_type") String animalType);
+    Set<FactDTO> getByType(@QueryParam("s") String animalType);
 
     @GET
     @Path("random")

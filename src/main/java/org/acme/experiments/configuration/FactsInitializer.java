@@ -1,5 +1,6 @@
 package org.acme.experiments.configuration;
 
+import io.quarkus.arc.profile.IfBuildProfile;
 import io.quarkus.arc.profile.UnlessBuildProfile;
 import io.quarkus.runtime.Startup;
 import lombok.SneakyThrows;
@@ -20,7 +21,7 @@ import java.util.Set;
 
 @Startup
 @ApplicationScoped
-//@UnlessBuildProfile("test")
+@IfBuildProfile("prod")
 public class FactsInitializer {
     private static final Logger LOGGER = LoggerFactory.getLogger(FactsInitializer.class);
 
