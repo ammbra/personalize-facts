@@ -7,7 +7,6 @@ import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.quarkus.cache.CacheManager;
 import io.quarkus.cache.runtime.caffeine.CaffeineCache;
 import io.quarkus.test.common.QuarkusTestResource;
-import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.acme.experiments.external.WiremockFacts;
 import org.junit.jupiter.api.MethodOrderer;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-@QuarkusTestResource(WiremockFacts.class)
+//@QuarkusTestResource(WiremockFacts.class)
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class PersonalizedFactResourceTest {
 

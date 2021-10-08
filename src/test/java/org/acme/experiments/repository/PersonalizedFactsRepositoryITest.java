@@ -32,7 +32,6 @@ public class PersonalizedFactsRepositoryITest {
     void shouldNotFindBySource() {
         Set<PersonalizedFact> expectedFacts = repository.findBySource(FactDTO.API, 1);
         assertNotNull(expectedFacts);
-        System.out.println(expectedFacts);
         assertTrue(expectedFacts.isEmpty());
     }
 }
