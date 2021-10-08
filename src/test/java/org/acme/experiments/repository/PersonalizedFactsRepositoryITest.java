@@ -4,6 +4,7 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.acme.experiments.dto.FactDTO;
+import org.acme.experiments.external.WiremockFacts;
 import org.acme.experiments.model.PersonalizedFact;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,6 @@ public class PersonalizedFactsRepositoryITest {
     void shouldNotFindBySource() {
         Set<PersonalizedFact> expectedFacts = repository.findBySource(FactDTO.API, 1);
         assertNotNull(expectedFacts);
-        System.out.println(expectedFacts);
         assertTrue(expectedFacts.isEmpty());
     }
 }

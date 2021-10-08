@@ -4,17 +4,13 @@ import io.quarkus.cache.CacheKey;
 import io.quarkus.cache.CacheResult;
 import org.acme.experiments.dto.FactDTO;
 import org.acme.experiments.dto.PersonalizedFactDTO;
-import org.eclipse.microprofile.faulttolerance.ExecutionContext;
-import org.eclipse.microprofile.faulttolerance.Fallback;
-import org.eclipse.microprofile.faulttolerance.FallbackHandler;
-import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.*;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -42,6 +38,8 @@ public interface FactsService {
     @Path("{factID}")
     @Produces("application/json")
     @Retry(maxRetries =1, maxDuration = 1)
+    @Fallback(AsyncFactFallback.class)
+    @Timeout(250)
     @CacheResult(cacheName = "animal-fact-async")
     CompletionStage<PersonalizedFactDTO> getByFactIDAsync(@CacheKey @PathParam("factID") String factID);
 

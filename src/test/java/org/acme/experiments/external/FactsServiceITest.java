@@ -79,7 +79,6 @@ public class FactsServiceITest {
         List<String> result =  valueAtPercentiles
                 .stream()
                 .map(m -> m.percentile() + "=" + m.value()).collect(Collectors.toList());
-        System.err.println(result);
         assertTrue(result.contains("0.99="+OUTLIER_SIZE));
 
     }
