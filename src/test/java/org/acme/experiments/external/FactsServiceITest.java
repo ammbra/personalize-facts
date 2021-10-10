@@ -7,31 +7,28 @@ import io.micrometer.core.instrument.distribution.ValueAtPercentile;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
-import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
+import static java.util.stream.Collectors.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 public class FactsServiceITest {
 
-    public static final double OUTLIER_SIZE = 103.875;
+    public static final double OUTLIER_SIZE = 103;
 
     @Inject
     @RestClient
     FactsService factsService;
 
     @Test
-    public void shouldMeasureActionsBuildingHistogram() throws Exception {
+    public void shouldMeasureActionsBuildingHistogram() {
         //given
         SimpleMeterRegistry metricRegistry = new SimpleMeterRegistry();
 
@@ -76,10 +73,10 @@ public class FactsServiceITest {
         summary.measure().iterator().forEachRemaining(measurements::add);
 
         List<ValueAtPercentile> valueAtPercentiles = Arrays.asList(distributionSummary.takeSnapshot().percentileValues());
-        List<String> result =  valueAtPercentiles
-                .stream()
-                .map(m -> m.percentile() + "=" + m.value()).collect(Collectors.toList());
-        assertTrue(result.contains("0.99="+OUTLIER_SIZE));
+        Map<Double, Double> result =  valueAtPercentiles.stream()
+            .collect(toMap(ValueAtPercentile::percentile, ValueAtPercentile :: value));
+        System.err.println(result);
+        assertTrue(result.get(0.99) > OUTLIER_SIZE);
 
     }
 
