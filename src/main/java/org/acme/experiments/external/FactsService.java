@@ -34,7 +34,7 @@ public interface FactsService {
     @GET
     @Path("{factID}")
     @Produces("application/json")
-    @Retry(maxRetries =1, maxDuration = 1)
+    @Retry(maxRetries =1, delay = 1000)
     @Fallback(AsyncFactFallback.class)
     @CacheResult(cacheName = "animal-fact-async")
     CompletionStage<PersonalizedFactDTO> getByFactIDAsync(@CacheKey @PathParam("factID") String factID);

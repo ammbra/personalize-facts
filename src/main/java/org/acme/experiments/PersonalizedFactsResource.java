@@ -18,7 +18,6 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
 @Path("/api")
-//@GraphQLApi
 public class PersonalizedFactsResource {
 
     @Inject
@@ -31,7 +30,6 @@ public class PersonalizedFactsResource {
     @GET
     @Path("fact")
     @Produces(MediaType.APPLICATION_JSON)
-//    @Query("allFactsByType")
     public Set<FactDTO> getByType(@QueryParam("type") String type) {
         return factsService.getByType(type);
     }
@@ -39,7 +37,6 @@ public class PersonalizedFactsResource {
     @GET
     @Path("fact-async")
     @Produces(MediaType.APPLICATION_JSON)
-//    @Query("allFactsByTypeAsync")
     public CompletionStage<Set<FactDTO>> getByTypeAsync(@QueryParam("type") String type) {
         return CompletableFuture.supplyAsync(() -> factsService.getByType(type));
     }
@@ -47,14 +44,12 @@ public class PersonalizedFactsResource {
     @GET
     @Path("fact-type-async")
     @Produces(MediaType.APPLICATION_JSON)
-//    @Query("allFactsByTypeAndAmount")
     public CompletionStage<Set<FactDTO>> getByTypeAndAmount(@QueryParam("type") String type, @QueryParam("amount") Integer amount) throws ExecutionException, InterruptedException {
         return CompletableFuture.supplyAsync(() -> factsService.getByTypeAsync(type, amount));
     }
 
     @GET
     @Path("fact-async/{factId}/{randomness}")
-//    @Query("animalFactById")
     @Produces(MediaType.APPLICATION_JSON)
     public CompletionStage<PersonalizedFactDTO> getFactAsync(@PathParam("factId") String factId, @PathParam("randomness") Double randomness) {
         return factsService.getByFactIDAsync(factId);
@@ -62,7 +57,6 @@ public class PersonalizedFactsResource {
 
     @GET
     @Path("fact/{source}/{size}")
-//    @Query("animalFactBySource")
     @Produces(MediaType.APPLICATION_JSON)
     public Set<PersonalizedFactDTO> getPaginatedAnimalsBySource(@PathParam("source") String source, @PathParam("size")@DefaultValue("10") Integer size) {
         return personalizedFactsService.findBySource(source, size);
