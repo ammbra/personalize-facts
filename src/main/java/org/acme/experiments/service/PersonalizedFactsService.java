@@ -25,4 +25,8 @@ public class PersonalizedFactsService {
         PersonalizedFactsMapper mapper = new PersonalizedFactsMapper();
         return mapper.mapToDTO(repository.findBySource(source, size));
     }
+
+    public long count() {
+        return repository.count();
+    }
 }

@@ -5,8 +5,6 @@ import org.acme.experiments.service.PersonalizedFactsService;
 import org.acme.experiments.dto.PersonalizedFactDTO;
 import org.acme.experiments.dto.FactDTO;
 import org.eclipse.microprofile.graphql.DefaultValue;
-import org.eclipse.microprofile.graphql.GraphQLApi;
-import org.eclipse.microprofile.graphql.Query;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.inject.Inject;

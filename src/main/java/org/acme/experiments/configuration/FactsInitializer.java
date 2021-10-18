@@ -40,10 +40,12 @@ public class FactsInitializer {
     @PostConstruct
     public void init() {
         LOGGER.debug("Initializing the db from external service");
-        PersonalizedFactsMapper personalizedMapper = new PersonalizedFactsMapper();
-        Set<FactDTO> facts = factsService.getByTypeAsync("cat", initialCapacity);
-        Set<PersonalizedFact> personalizedFacts = personalizedMapper.mapFromDTO(facts);
-        personalizedFactsService.setup(personalizedFacts);
+        if (personalizedFactsService.count() == initialCapacity) {
+            PersonalizedFactsMapper personalizedMapper = new PersonalizedFactsMapper();
+            Set<FactDTO> facts = factsService.getByTypeAsync("cat", initialCapacity);
+            Set<PersonalizedFact> personalizedFacts = personalizedMapper.mapFromDTO(facts);
+            personalizedFactsService.setup(personalizedFacts);
+        }
         LOGGER.debug("End initialization of the db ");
     }
 }
