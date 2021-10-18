@@ -19,16 +19,17 @@ import java.util.concurrent.CompletionStage;
 @RegisterRestClient
 public interface FactsService {
     Logger LOGGER = LoggerFactory.getLogger(FactsService.class);
+    FactDTO EMPTY_FACT = FactDTO.empty();
 
     @GET
     @Produces("application/json")
     @Fallback(FactFallback.class)
-    Set<FactDTO> getByType(@QueryParam("s") String animalType);
+    Set<FactDTO> getByType(@QueryParam("animal_type") String animalType);
 
     @GET
     @Path("random")
     @Produces("application/json")
-    @Fallback(FactFallback.class)
+    @Fallback(fallbackMethod = "fallbackFacts")
     Set<FactDTO> getByTypeAsync(@QueryParam("animal_type") String animalType, @QueryParam("amount") int amount);
 
     @GET
@@ -39,9 +40,8 @@ public interface FactsService {
     @CacheResult(cacheName = "animal-fact-async")
     CompletionStage<PersonalizedFactDTO> getByFactIDAsync(@CacheKey @PathParam("factID") String factID);
 
-    public static class FactFallback implements FallbackHandler<Set<FactDTO>> {
+    class FactFallback implements FallbackHandler<Set<FactDTO>> {
 
-        private static final FactDTO EMPTY_FACT = FactDTO.empty();
         @Override
         public Set<FactDTO> handle(ExecutionContext context) {
             return Set.of(EMPTY_FACT);
@@ -49,7 +49,7 @@ public interface FactsService {
 
     }
 
-    public static class AsyncFactFallback implements FallbackHandler<CompletionStage<PersonalizedFactDTO>> {
+    class AsyncFactFallback implements FallbackHandler<CompletionStage<PersonalizedFactDTO>> {
 
         private static final PersonalizedFactDTO EMPTY_PERSONALIZED_FACT = PersonalizedFactDTO.empty();
         @Override
@@ -59,4 +59,8 @@ public interface FactsService {
 
     }
 
+    default Set<FactDTO> fallbackFacts(String type, int amount) {
+        LOGGER.debug("Falling back to RecommendationResource#fallbackRecommendations()");
+        return Set.of(EMPTY_FACT);
+    }
 }
