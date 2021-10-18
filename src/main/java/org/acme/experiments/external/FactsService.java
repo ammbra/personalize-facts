@@ -30,7 +30,7 @@ public interface FactsService {
     @Path("random")
     @Produces("application/json")
     @Fallback(fallbackMethod = "fallbackFacts")
-    Set<FactDTO> getByTypeAsync(@QueryParam("animal_type") String animalType, @QueryParam("amount") int amount);
+    Set<FactDTO> getByTypeAndAmount(@QueryParam("animal_type") String animalType, @QueryParam("amount") int amount);
 
     @GET
     @Path("{factID}")
@@ -60,7 +60,8 @@ public interface FactsService {
     }
 
     default Set<FactDTO> fallbackFacts(String type, int amount) {
-        LOGGER.debug("Falling back to RecommendationResource#fallbackRecommendations()");
+
+        LOGGER.debug("Falling back to FactsService#getByTypeAndAmount");
         return Set.of(EMPTY_FACT);
     }
 }

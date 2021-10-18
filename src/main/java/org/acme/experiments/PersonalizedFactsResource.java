@@ -43,7 +43,7 @@ public class PersonalizedFactsResource {
     @Path("fact-type-async")
     @Produces(MediaType.APPLICATION_JSON)
     public CompletionStage<Set<FactDTO>> getByTypeAndAmount(@QueryParam("type") String type, @QueryParam("amount") Integer amount) throws ExecutionException, InterruptedException {
-        return CompletableFuture.supplyAsync(() -> factsService.getByTypeAsync(type, amount));
+        return CompletableFuture.supplyAsync(() -> factsService.getByTypeAndAmount(type, amount));
     }
 
     @GET

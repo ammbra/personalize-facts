@@ -36,7 +36,7 @@ public class FactsServiceITest {
         DistributionSummary distributionSummary = metricRegistry
                 .summary("request-simple.size");
         final int amount = 5;
-        int size = factsService.getByTypeAsync("cat", amount).size();
+        int size = factsService.getByTypeAndAmount("cat", amount).size();
 
         //when
         for (int i = 0; i < 100; i++) {

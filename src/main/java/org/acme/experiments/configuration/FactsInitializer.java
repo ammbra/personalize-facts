@@ -1,7 +1,6 @@
 package org.acme.experiments.configuration;
 
 import io.quarkus.arc.profile.IfBuildProfile;
-import io.quarkus.arc.profile.UnlessBuildProfile;
 import io.quarkus.runtime.Startup;
 import lombok.SneakyThrows;
 import org.acme.experiments.dto.FactDTO;
@@ -42,7 +41,7 @@ public class FactsInitializer {
         LOGGER.debug("Initializing the db from external service");
         if (personalizedFactsService.count() == initialCapacity) {
             PersonalizedFactsMapper personalizedMapper = new PersonalizedFactsMapper();
-            Set<FactDTO> facts = factsService.getByTypeAsync("cat", initialCapacity);
+            Set<FactDTO> facts = factsService.getByTypeAndAmount("cat", initialCapacity);
             Set<PersonalizedFact> personalizedFacts = personalizedMapper.mapFromDTO(facts);
             personalizedFactsService.setup(personalizedFacts);
         }
